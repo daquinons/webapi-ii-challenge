@@ -4,9 +4,8 @@
   "description": "LambdaSchool Node.js and Express",
   "private": true,
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "server": "nodemon --experimental-modules index.js"
+    "server": "nodemon index.js"
   },
   "dependencies": {
     "express": "^4.17.1",

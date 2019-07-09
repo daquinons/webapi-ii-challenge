@@ -8,7 +8,7 @@ const PostsList = ({ posts }) => {
             return (
               <>
                 <h3>{post.title}</h3>
-                <h4>{post.contents}</h4>
+                <p>{post.contents}</p>
                 <hr />
               </>
             );

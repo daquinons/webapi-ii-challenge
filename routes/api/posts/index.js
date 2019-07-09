@@ -18,22 +18,18 @@ router.post('/posts', async (req, res) => {
   try {
     const newPost = req.body;
     if (!newPost.title || !newPost.contents) {
-      res
-        .status(400)
-        .json({
-          errorMessage: 'Please provide title and contents for the post.'
-        });
+      res.status(400).json({
+        errorMessage: 'Please provide title and contents for the post.'
+      });
     } else {
       const createdPostId = await Posts.insert(newPost);
       const createdPost = await Posts.findById(createdPostId.id);
       res.status(201).json(createdPost[0]);
     }
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        error: 'There was an error while saving the post to the database'
-      });
+    res.status(500).json({
+      error: 'There was an error while saving the post to the database'
+    });
   }
 });
 
@@ -94,6 +90,25 @@ router.put('/posts/:id', async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error: 'The post could not be removed' });
+  }
+});
+
+router.get('/posts/:id/comments', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await Posts.findById(id);
+    if (post.length) {
+      const comments = await Posts.findPostComments(id);
+      res.json(comments);
+    } else {
+      res
+        .status(404)
+        .json({ message: 'The post with the specified ID does not exist.' });
+    }
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: 'The comments information could not be retrieved.' });
   }
 });
 

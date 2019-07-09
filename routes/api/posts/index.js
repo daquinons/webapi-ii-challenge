@@ -18,8 +18,8 @@ router.get('/posts/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const post = await Posts.findById(id);
-    if (post) {
-      res.json(post);
+    if (post.length) {
+      res.json(post[0]);
     } else {
       res
         .status(404)
@@ -36,9 +36,9 @@ router.delete('/posts/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const post = await Posts.findById(id);
-    if (post) {
+    if (post.length) {
       await Posts.remove(id);
-      res.json(post);
+      res.json(post[0]);
     } else {
       res
         .status(404)
